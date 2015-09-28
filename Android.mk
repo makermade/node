@@ -6,6 +6,20 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_PATH := $(TARGET_OUT_EXECUTABLES)
 include $(BUILD_PREBUILT)
 
+$(TARGET_ROOT_OUT)/usr:
+	mkdir -p $(TARGET_OUT)/gcc-runtime
+	cp -R $(ANDROID_BUILD_TOP)/toolchain/linux-x86/gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_runtime/usr $(TARGET_OUT)/gcc-runtime
+	ln -sf system/gcc-runtime/usr $@
+
+$(TARGET_ROOT_OUT)/lib:
+	mkdir -p $(TARGET_OUT)/gcc-runtime
+	cp -R $(ANDROID_BUILD_TOP)/toolchain/linux-x86/gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_runtime/lib $(TARGET_OUT)/gcc-runtime
+	ln -sf system/gcc-runtime/lib $@
+
+ALL_DEFAULT_INSTALLED_MODULES +=         \
+		$(TARGET_ROOT_OUT)/usr   \
+		$(TARGET_ROOT_OUT)/lib
+
 $(LOCAL_INSTALLED_MODULE): $(LOCAL_BUILT_MODULE)
 
 .PHONY: $(LOCAL_BUILT_MODULE)
@@ -25,7 +39,6 @@ $(LOCAL_BUILT_MODULE):
 	export CXX=$$TOOLCHAIN/arm-linux-gnueabihf-g++; \
 	export LINK=$$TOOLCHAIN/arm-linux-gnueabihf-g++; \
 	./configure \
-	  --fully-static \
 	  --dest-cpu=arm \
 	  --dest-os=linux && \
 	$(MAKE) ) && mkdir -p $(@D) && cp node/out/Release/iojs $@
