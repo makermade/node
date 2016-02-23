@@ -46,4 +46,4 @@ $(LOCAL_BUILT_MODULE):
 	./configure \
 	  --dest-cpu=arm \
 	  --dest-os=linux && \
-	$(MAKE) ) && mkdir -p $(@D) && cp node/out/Release/iojs $@
+	$(MAKE) ) && mkdir -p $(@D) && cp node/out/Release/node $@
