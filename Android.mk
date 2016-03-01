@@ -16,6 +16,10 @@ $(TARGET_ROOT_OUT)/lib:
 	cp -R $(ANDROID_BUILD_TOP)/toolchain/linux-x86/gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_runtime/lib $(TARGET_OUT)/gcc-runtime
 	ln -sf system/gcc-runtime/lib $@
 
+$(TARGET_ROOT_OUT)/bin:
+	mkdir -p $(@D)
+	ln -sf system/bin $@
+
 $(TARGET_OUT_EXECUTABLES)/node:
 	mkdir -p $(@D)
 	ln -sf nodejs $@
@@ -23,6 +27,7 @@ $(TARGET_OUT_EXECUTABLES)/node:
 ALL_DEFAULT_INSTALLED_MODULES +=         \
 		$(TARGET_ROOT_OUT)/usr   \
 		$(TARGET_OUT_EXECUTABLES)/node \
+		$(TARGET_ROOT_OUT)/bin \
 		$(TARGET_ROOT_OUT)/lib
 
 $(LOCAL_INSTALLED_MODULE): $(LOCAL_BUILT_MODULE)
